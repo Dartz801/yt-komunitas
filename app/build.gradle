@@ -1,0 +1,29 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'id.yudha.ytkomunitas'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'id.yudha.ytkomunitas'
+        minSdk 29
+        targetSdk 34
+        versionCode 1
+        versionName '1.0'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            // ditandatangani dengan kunci debug supaya APK langsung bisa dipasang
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
