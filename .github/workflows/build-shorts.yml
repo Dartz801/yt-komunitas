@@ -1,0 +1,30 @@
+name: Build APK Shorts
+
+on:
+  push:
+    paths:
+      - 'shorts/**'
+      - '.github/workflows/build-shorts.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: shorts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Build
+        run: gradle :app:assembleRelease --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: YT-Shorts
+          path: shorts/app/build/outputs/apk/release/*.apk
