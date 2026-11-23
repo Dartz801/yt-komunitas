@@ -1,6 +1,7 @@
 package id.yudha.ytshorts;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.WallpaperManager;
 import android.content.ComponentName;
 import android.net.Uri;
@@ -125,7 +126,7 @@ public class MainActivity extends Activity {
         wpBtn = button("🖼  Jadikan wallpaper bergerak", Color.rgb(0, 120, 215));
         wpBtn.setTextSize(16);
         wpBtn.setVisibility(View.GONE);
-        wpBtn.setOnClickListener(v -> applyWallpaper(Uri.fromFile(lastVideo())));
+        wpBtn.setOnClickListener(v -> chooseModeThenApply(Uri.fromFile(lastVideo())));
         LinearLayout.LayoutParams wlp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(52));
         wlp.setMargins(0, dp(6), 0, 0);
         root.addView(wpBtn, wlp);
@@ -414,8 +415,27 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int req, int res, Intent data) {
         super.onActivityResult(req, res, data);
         if (req == PICK_VIDEO && res == RESULT_OK && data != null && data.getData() != null) {
-            applyWallpaper(data.getData());
+            chooseModeThenApply(data.getData());
         }
+    }
+
+    /** Tanya mode tampilan dulu: penuh layar atau utuh. */
+    private void chooseModeThenApply(Uri src) {
+        boolean fill = getSharedPreferences(VideoWallpaperService.PREFS, MODE_PRIVATE)
+                .getBoolean(VideoWallpaperService.KEY_FILL, true);
+        String[] items = {
+                "Penuh layar (pinggir video sedikit terpotong)",
+                "Tampilkan utuh (ada garis hitam di atas/bawah)"};
+        new AlertDialog.Builder(this)
+                .setTitle("Tampilan wallpaper")
+                .setSingleChoiceItems(items, fill ? 0 : 1, (d, which) -> {
+                    getSharedPreferences(VideoWallpaperService.PREFS, MODE_PRIVATE).edit()
+                            .putBoolean(VideoWallpaperService.KEY_FILL, which == 0).apply();
+                    d.dismiss();
+                    applyWallpaper(src);
+                })
+                .setNegativeButton("Batal", null)
+                .show();
     }
 
     /** Salin video ke penyimpanan aplikasi lalu buka layar pemasangan wallpaper. */
