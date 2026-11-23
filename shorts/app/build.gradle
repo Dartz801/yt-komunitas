@@ -1,0 +1,44 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'id.yudha.ytshorts'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'id.yudha.ytshorts'
+        minSdk 29
+        targetSdk 35
+        versionCode 1
+        versionName '1.0'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    packaging {
+        resources {
+            excludes += [
+                'META-INF/README.md', 'META-INF/CHANGES', 'META-INF/COPYRIGHT',
+                'META-INF/DEPENDENCIES', 'META-INF/LICENSE*', 'META-INF/NOTICE*',
+                'META-INF/versions/9/OSGI-INF/MANIFEST.MF', 'META-INF/*.kotlin_module'
+            ]
+        }
+    }
+}
+
+dependencies {
+    // Mesin pengambil data YouTube (dipakai juga oleh aplikasi NewPipe).
+    // Kalau suatu saat unduhan gagal karena YouTube berubah, cukup naikkan versi ini.
+    implementation 'com.github.TeamNewPipe:NewPipeExtractor:v0.27.1'
+}

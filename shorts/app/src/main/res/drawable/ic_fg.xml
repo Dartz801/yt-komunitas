@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- layar vertikal (Shorts) -->
+    <path android:fillColor="#FF0033"
+        android:pathData="M40,26h28a4,4 0,0 1,4 4v48a4,4 0,0 1,-4 4H40a4,4 0,0 1,-4 -4V30a4,4 0,0 1,4 -4z" />
+    <!-- panah unduh -->
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M50,38h8v16h7L54,66 43,54h7z" />
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M43,70h22v4H43z" />
+</vector>
